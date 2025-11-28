@@ -39,10 +39,10 @@ namespace NetworkHighlightOverlay.Code.Core
 
         private Manager()
         {
-            ModSettings.SettingsChanged += OnSettingsChanged;
+            ModSettings.SettingsChanged += _ => OnSettingsChanged();
         }
-        
-        private void OnSettingsChanged(Config _)
+
+        private void OnSettingsChanged()
         {
             if (_isEnabled)
                 RebuildCache();
@@ -336,8 +336,7 @@ namespace NetworkHighlightOverlay.Code.Core
         {
             if (info?.m_lanes == null)
                 return false;
-
-            // you can extend this mask if you want to treat buses/taxis/etc as "roads"
+            
             const VehicleInfo.VehicleType carLikeMask = VehicleInfo.VehicleType.Car;
 
             foreach (var lane in info.m_lanes)
