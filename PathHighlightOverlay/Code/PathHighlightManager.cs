@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ColossalFramework;
+using ColossalFramework.Math;
 using UnityEngine;
 
 
@@ -97,13 +98,45 @@ namespace PathHighlightOverlay.Code
                 if ((segment.m_flags & NetSegment.Flags.Created) == 0)
                     continue;
                 
-                NetTool.RenderOverlay(
+                RenderPedSegmentOverlay(
                     cameraInfo,
                     ref segment,
                     col,  
                     col 
                 );
             }
+        }
+        //temporary test to try and draw bridges and tunnels, too
+        private static void RenderPedSegmentOverlay(
+            RenderManager.CameraInfo cameraInfo,
+            ref NetSegment segment,
+            Color color,
+            Color color2)
+        {
+            NetInfo info = segment.Info;
+            if (info == null)
+                return; // keeping only the null check, removing the others
+
+            Bezier3 bezier;
+            bezier.a = NetManager.instance.m_nodes.m_buffer[segment.m_startNode].m_position;
+            bezier.d = NetManager.instance.m_nodes.m_buffer[segment.m_endNode].m_position;
+            NetSegment.CalculateMiddlePoints(
+                bezier.a, segment.m_startDirection,
+                bezier.d, segment.m_endDirection,
+                false, false, out bezier.b, out bezier.c);
+
+            // same params NetTool uses
+            Singleton<RenderManager>.instance.OverlayEffect.DrawBezier(
+                cameraInfo,
+                color,
+                bezier,
+                info.m_halfWidth * 2f,
+                -100000f,     // no cut at start
+                -100000f,     // no cut at end
+                -1f,          // minY
+                1280f,        // maxY
+                false,
+                false);
         }
     }
 }
