@@ -177,7 +177,7 @@ namespace NetworkHighlightOverlay.Code.Core
             }
 
             // 1) PEDESTRIAN
-            if (ai is PedestrianPathAI || ai is PedestrianWayAI)
+            if (ai is PedestrianPathAI || ai is PedestrianWayAI || ai is PedestrianZoneRoadAI)
             {
                 if (!ModSettings.HighlightPedestrianPaths)
                     return false;
@@ -186,7 +186,7 @@ namespace NetworkHighlightOverlay.Code.Core
                 return true;
             }
 
-            if (ai is PedestrianBridgeAI)
+            if (ai is PedestrianBridgeAI || ai is PedestrianZoneBridgeAI)
             {
                 if (!ModSettings.HighlightPedestrianPaths ||
                     !ModSettings.HighlightBridges)
