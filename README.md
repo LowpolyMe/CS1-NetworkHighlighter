@@ -8,10 +8,10 @@ It is useful for debugging, visual clarity, screenshots, and inspecting hidden /
 ## Features
 
 Highlights the following network types:
-- Pedestrian paths
+- Vanilla Pedestrian Paths & Promenade Pedestrian Streets
 - Roads
 - Highways
-- Tram tracks / trolley lanes
+- Tram & Trolley
 - Train
 - Metro 
 - Monorails
